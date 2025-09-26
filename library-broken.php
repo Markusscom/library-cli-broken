@@ -1,4 +1,5 @@
 <?php
+$book = require_once "book.php";
 
 $continue = true;
 
@@ -24,17 +25,11 @@ function addBook(&$books) {
     $title = readline("Enter title: ");
     $author = readline("Enter author: ");
     $status = readline("Enter is it available? (y/n): ");
-    if ($status === "n") {
-        $status = "not available";
-    }
-    elseif ($status === "y") {
-        $status = "available";
-    }
-    else {
-        echo "incorrect answer format!";
-        return;
-    }
-    $books[] = ['title' => $title, 'author' => $author, 'status' => $status];
+
+    $book = new Book($title, $author, $status);
+    $book->setStatus($status);
+
+    $books[] = ['title' => $title, 'author' => $author, 'status' => $book->status];
 }
 
 function deleteBook(&$books) {
@@ -43,7 +38,8 @@ function deleteBook(&$books) {
 }
 
 function displayBook($id, $book) {
-    echo "ID: {$id} // Title: ". $book['title'] . " // Author: " . $book['author']. " // Status: " . $book['status']. "\n\n";
+    $book1 = new Book($book['title'], $book['author'], $book['status']);
+    $book1->display();
 }
 
 
@@ -61,7 +57,11 @@ do {
     switch ($choice) {
         case 1:
             foreach ($books as $id => $book) {
-                displayBook($id, $book);
+                //displayBook($id, $book);
+            }
+            foreach ($books as $id => $book) {
+                $book = new Book($book['title'],$book['author'],$book['status']);
+                $book->display();
             }
 
             break;
