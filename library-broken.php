@@ -1,35 +1,26 @@
 <?php
-$book = require_once "book.php";
 
 $continue = true;
 
 $books = [
     1 => [
         'title' => 'The Great Gatsby',
-        'author' => 'F. Scott Fitzgerald',
-        'status' => 'available'
+        'author' => 'F. Scott Fitzgerald'
     ],
     2 => [
         'title' => '1984',
-        'author' => 'George Orwell',
-        'status' => 'available'
+        'author' => 'George Orwell'
     ],
     3 => [
         'title' => 'Pride and Prejudice',
-        'author' => 'Jane Austen',
-        'status' => 'available'
+        'author' => 'Jane Austen'
     ]
 ];
 
 function addBook(&$books) {
     $title = readline("Enter title: ");
     $author = readline("Enter author: ");
-    $status = readline("Enter is it available? (y/n): ");
-
-    $book = new Book($title, $author, $status);
-    $book->setStatus($status);
-
-    $books[] = ['title' => $title, 'author' => $author, 'status' => $book->status];
+    $books[] = ['title' => $title, 'author' => $author];
 }
 
 function deleteBook(&$books) {
@@ -38,8 +29,7 @@ function deleteBook(&$books) {
 }
 
 function displayBook($id, $book) {
-    $book1 = new Book($book['title'], $book['author'], $book['status']);
-    $book1->display();
+    echo "ID: {$id} // Title: ". $book['title'] . " // Author: " . $book['author']. "\n\n";
 }
 
 
@@ -57,8 +47,7 @@ do {
     switch ($choice) {
         case 1:
             foreach ($books as $id => $book) {
-                $book = new Book($book['title'],$book['author'],$book['status']);
-                $book->display();
+                displayBook($id, $book);
             }
 
             break;
@@ -78,7 +67,7 @@ do {
             $continue = false;
             break;
         case 13:
-            print_r($books);
+            print_r($books); // hidden option to see full $books content
             break;
         default:
             echo "Invalid choice\n";
