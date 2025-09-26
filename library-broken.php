@@ -1,32 +1,45 @@
 <?php
+$book = require_once "book.php";
+
+$continue = true;
 
 $books = [
     1 => [
-        'title' => 'The Great Gatsby'
-        'author' => 'F. Scott Fitzgerald'
-    ]
+        'title' => 'The Great Gatsby',
+        'author' => 'F. Scott Fitzgerald',
+        'status' => 'available'
+    ],
     2 => [
-        'title' => '1984'
-        'author' => 'George Orwell'
-    ]
+        'title' => '1984',
+        'author' => 'George Orwell',
+        'status' => 'available'
+    ],
     3 => [
-        'title' => 'Pride and Prejudice'
-        'author' => 'Jane Austen'
+        'title' => 'Pride and Prejudice',
+        'author' => 'Jane Austen',
+        'status' => 'available'
     ]
 ];
 
 function addBook(&$books) {
     $title = readline("Enter title: ");
-    $books[] = ['title' => $title, 'author' => $author];
+    $author = readline("Enter author: ");
+    $status = readline("Enter is it available? (y/n): ");
+
+    $book = new Book($title, $author, $status);
+    $book->setStatus($status);
+
+    $books[] = ['title' => $title, 'author' => $author, 'status' => $book->status];
 }
 
-function deleteBook() {
+function deleteBook(&$books) {
     $id = readline("Enter book ID you want to delete: ");
-    unset($bookList[$id]);
+    unset($books[$id]);
 }
 
 function displayBook($id, $book) {
-    echo "ID: {$id} // Title: ". $book['title'] . " // Author: " . $book['author']. "\n\n";
+    $book1 = new Book($book['title'], $book['author'], $book['status']);
+    $book1->display();
 }
 
 
@@ -44,7 +57,8 @@ do {
     switch ($choice) {
         case 1:
             foreach ($books as $id => $book) {
-                displayBook($id, $book);
+                $book = new Book($book['title'],$book['author'],$book['status']);
+                $book->display();
             }
 
             break;
@@ -64,7 +78,7 @@ do {
             $continue = false;
             break;
         case 13:
-            print_r($books); // hidden option to see full $books content
+            print_r($books);
             break;
         default:
             echo "Invalid choice\n";
