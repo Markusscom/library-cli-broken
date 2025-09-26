@@ -5,22 +5,36 @@ $continue = true;
 $books = [
     1 => [
         'title' => 'The Great Gatsby',
-        'author' => 'F. Scott Fitzgerald'
+        'author' => 'F. Scott Fitzgerald',
+        'status' => 'available'
     ],
     2 => [
         'title' => '1984',
-        'author' => 'George Orwell'
+        'author' => 'George Orwell',
+        'status' => 'available'
     ],
     3 => [
         'title' => 'Pride and Prejudice',
-        'author' => 'Jane Austen'
+        'author' => 'Jane Austen',
+        'status' => 'available'
     ]
 ];
 
 function addBook(&$books) {
     $title = readline("Enter title: ");
     $author = readline("Enter author: ");
-    $books[] = ['title' => $title, 'author' => $author];
+    $status = readline("Enter is it available? (y/n): ");
+    if ($status === "n") {
+        $status = "not available";
+    }
+    elseif ($status === "y") {
+        $status = "available";
+    }
+    else {
+        echo "incorrect answer format!";
+        return;
+    }
+    $books[] = ['title' => $title, 'author' => $author, 'status' => $status];
 }
 
 function deleteBook(&$books) {
@@ -29,7 +43,7 @@ function deleteBook(&$books) {
 }
 
 function displayBook($id, $book) {
-    echo "ID: {$id} // Title: ". $book['title'] . " // Author: " . $book['author']. "\n\n";
+    echo "ID: {$id} // Title: ". $book['title'] . " // Author: " . $book['author']. " // Status: " . $book['status']. "\n\n";
 }
 
 
