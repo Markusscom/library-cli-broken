@@ -57,9 +57,6 @@ do {
     switch ($choice) {
         case 1:
             foreach ($books as $id => $book) {
-                //displayBook($id, $book);
-            }
-            foreach ($books as $id => $book) {
                 $book = new Book($book['title'],$book['author'],$book['status']);
                 $book->display();
             }
@@ -68,7 +65,6 @@ do {
         case 2:
             $id = readline("Enter book id: ");
             displayBook($id, $books[$id]);
-
             break;
         case 3:
             addBook($books);
@@ -81,7 +77,7 @@ do {
             $continue = false;
             break;
         case 13:
-            print_r($books); // hidden option to see full $books content
+            print_r($books);
             break;
         default:
             echo "Invalid choice\n";
